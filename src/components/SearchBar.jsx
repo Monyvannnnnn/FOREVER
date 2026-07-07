@@ -1,13 +1,22 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/frontend_assets/assets';
 import { useLocation } from 'react-router-dom';
 
 export default function SearchBar() {
   const { search, setSearch, showSearch, setShowSearch } = useContext(ShopContext);
+  const [visible, setVisible] = useState(false);
   const location = useLocation();
 
-  const visible = location.pathname.includes('collection');
+  useEffect(() => {
+    if (location.pathname.includes('collection') && showSearch) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setVisible(true);
+    } else {
+      setVisible(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   return showSearch && visible ? (
     <div className='border-t border-b bg-gray-50 text-center'>
@@ -24,8 +33,11 @@ export default function SearchBar() {
       <img 
         src={assets.cross_icon} 
         alt="close" 
-        onClick={() => setShowSearch(false)} 
-        className='inline w-3 cursor-pointer' 
+        onClick={() => {
+          setShowSearch(false);
+          setSearch('');
+        }} 
+        className='inline w-3 cursor-pointer'
       />
     </div>
   ) : null;

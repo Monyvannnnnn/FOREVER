@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
 import { assets } from "../assets/frontend_assets/assets";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { ShopContext } from "../context/ShopContext";
 
 const navLinks = [
   { to: "/", label: "HOME" },
@@ -11,7 +12,8 @@ const navLinks = [
 
 export default function Navbar() {
   const [visible, setVisible] = useState(false);
-  const {setShowSearch} = useContext(ShopContext)
+  const {setShowSearch,getCartCount} = useContext(ShopContext);
+  const navigate = useNavigate();
   return (
     <div className="flex items-center justify-between py-5 font-medium">
       <Link to="/">
@@ -33,6 +35,10 @@ export default function Navbar() {
 
       <div className="flex items-center gap-6">
         <img
+          onClick={() => {
+            setShowSearch(true);
+            navigate("/collection");
+          }}
           src={assets.search_icon}
           alt="Search"
           className="w-5 cursor-pointer "
@@ -59,7 +65,7 @@ export default function Navbar() {
             className="w-5 cursor-pointer"
           />
           <p className="absolute -right-1.5 bottom-1.25 aspect-square w-4 rounded-full bg-black text-center text-[8px] leading-4 text-white">
-            10
+            {getCartCount()}
           </p>
         </Link>
         <button
