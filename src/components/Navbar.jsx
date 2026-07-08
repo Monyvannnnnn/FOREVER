@@ -25,10 +25,10 @@ export default function Navbar() {
           <NavLink
             key={item.to}
             to={item.to}
-            className="flex flex-col items-center gap-1"
+            className="flex flex-col items-center gap-1 nav-link-animated"
           >
-            <p>{item.label}</p>
-            <hr className="hidden h-[1.5px] w-2/4 border-none bg-gray-700" />
+            <p className="hover:text-black transition-colors duration-300">{item.label}</p>
+            <hr className="h-[1.5px] w-4/5 border-none bg-gray-700" />
           </NavLink>
         ))}
       </ul>
@@ -45,11 +45,13 @@ export default function Navbar() {
         />
 
         <div className="group relative ">
+          <Link to='/login'>
           <img
             src={assets.profile_icon}
             alt="User"
             className="w-5 cursor-pointer"
           />
+          </Link>
           <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
             <div className="flex w-36 flex-col gap-2 rounded bg-slate-100 px-5 py-3 text-gray-500">
               <p className="cursor-pointer hover:text-black">My Account</p>

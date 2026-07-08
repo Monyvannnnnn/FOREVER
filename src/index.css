@@ -5,6 +5,19 @@ a.active hr {
   display: block;
 }
 
+/* Animated Nav Link Underline */
+.nav-link-animated hr {
+  display: block !important;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  transform-origin: center;
+}
+
+.nav-link-animated:hover hr,
+.nav-link-animated.active hr {
+  transform: scaleX(1) !important;
+}
+
 * {
   font-family: Outfit;
 }
