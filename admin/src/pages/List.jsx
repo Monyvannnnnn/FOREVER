@@ -19,7 +19,10 @@ const List = ({ token }) => {
       toast.error(error.message);
     }
   };
+
   const removeProduct = async (id) => {
+    //Illusion
+    setList((prevList) => prevList.filter((item) => item._id !== id));
     try {
       const response = await axios.post(
         backendUrl + "/api/product/remove",
@@ -32,10 +35,13 @@ const List = ({ token }) => {
         await fetchList();
       } else {
         toast.error(response.data.message);
+        await fetchList();
       }
     } catch (error) {
       console.log(error);
       toast.error(error.message);
+
+      await fetchList();
     }
   };
 
