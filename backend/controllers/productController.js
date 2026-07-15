@@ -39,7 +39,7 @@ const addProduct = async (req, res) => {
         typeof sizes === "string"
           ? JSON.parse(sizes.replace(/'/g, '"'))
           : sizes || [],
-      bestseller: bestseller === "true" ? true : false,
+      bestseller: bestseller === "true" || bestseller === true ? true : false,
       image: imagesUrl,
       date: Date.now(),
     };
