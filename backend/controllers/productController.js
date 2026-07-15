@@ -49,22 +49,6 @@ const addProduct = async (req, res) => {
     await product.save();
 
     res.json({ success: true, message: "Product added successfully" });
-
-    console.log(
-      name,
-      description,
-      price,
-      category,
-      subCategory,
-      sizes,
-      bestseller,
-    );
-    console.log(imagesUrl);
-
-    res.json({
-      success: true,
-      message: "Received successfully",
-    });
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -90,7 +74,7 @@ const listProduct = async (req, res) => {
 const removeProduct = async (req, res) => {
   try {
     await productModel.findByIdAndDelete(req.body.id);
-    res.json({ sucess: true, message: "Product removed successfully" });
+    res.json({ success: true, message: "Product removed successfully" });
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: "Internal server error" });
