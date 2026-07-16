@@ -12,7 +12,8 @@ const ShopContextProvider = (props) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [search, setSearch] = useState("");
   const [products, setProducts] = useState([]);
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
+
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
   const navigate = useNavigate();
@@ -133,11 +134,8 @@ const ShopContextProvider = (props) => {
 
   useEffect(() => {
     getProductsData();
-    if (!token && localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
-      getUserCart(localStorage.getItem("token"));
-    }
   }, []);
+
 
   useEffect(() => {
     if (token) {

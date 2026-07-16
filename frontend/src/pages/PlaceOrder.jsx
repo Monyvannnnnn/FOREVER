@@ -1,35 +1,140 @@
-import React, { useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import Title from '../components/Title'
 import CartTotal from '../components/CartTotal'
 import { assets } from '../assets/frontend_assets/assets'
 import { useNavigate } from 'react-router-dom';
+import { ShopContext } from '../context/ShopContext';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function PlaceOrder() {
 
   const [method, setMethod] = useState('cod');
+  const { backendUrl, token, cartItems, setCartItems, getCartAmount, delivery_fee, products } = useContext(ShopContext);
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: '',
+    street: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: '',
+    phone: ''
+  })
+
+  useEffect(() => {
+    if (!token && !localStorage.getItem('token')) {
+      navigate('/login');
+    }
+  }, [token]);
+
+  const onChangeHandler = (event) => {
+    const name = event.target.name
+    const value = event.target.value
+    setFormData(data => ({ ...data, [name]: value }))
+  }
+
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    try {
+      let orderItems = [];
+      for (const items in cartItems) {
+        for (const item in cartItems[items]) {
+          if (cartItems[items][item] > 0) {
+            const itemInfo = structuredClone(products.find(product => product._id === items));
+            if (itemInfo) {
+              itemInfo.size = item;
+              itemInfo.quantity = cartItems[items][item];
+              orderItems.push(itemInfo);
+            }
+          }
+        }
+      }
+
+      let orderData = {
+        address: formData,
+        items: orderItems,
+        amount: getCartAmount() + delivery_fee
+      }
+
+      const activeToken = token || localStorage.getItem('token');
+      if (!activeToken) {
+        toast.error("Please login to place an order");
+        navigate('/login');
+        return;
+      }
+
+      switch (method) {
+        // API Calls for COD
+        case 'cod':
+          const response = await axios.post(backendUrl + '/api/order/place', orderData, { headers: { token: activeToken } });
+          if (response.data.success) {
+            setCartItems({});
+            navigate('/orders');
+          } else {
+            toast.error(response.data.message);
+          }
+          break;
+
+        case 'stripe':
+          const responseStripe = await axios.post(backendUrl + '/api/order/stripe', orderData, { headers: { token: activeToken } });
+          if (responseStripe.data.success) {
+            toast.success("Order Placed via Stripe (Mock)");
+            setCartItems({});
+            navigate('/orders');
+          } else {
+            toast.error(responseStripe.data.message);
+          }
+          break;
+
+        case 'razorpay':
+          const responseRazorpay = await axios.post(backendUrl + '/api/order/razorpay', orderData, { headers: { token: activeToken } });
+          if (responseRazorpay.data.success) {
+            toast.success("Order Placed via Razorpay (Mock)");
+            setCartItems({});
+            navigate('/orders');
+          } else {
+            toast.error(responseRazorpay.data.message);
+          }
+          break;
+
+        default:
+          break;
+      }
+
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  }
+
+
+
+
 
   return (
-    <div className='flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t'>
+    <form onSubmit={onSubmitHandler} className='flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t'>
       <div className='flex flex-col gap-4 w-full sm:max-w-[480px]'>
         <div className='text-xl sm:text-2xl my-3'>
           <Title text1={'DELIVERY'} text2={'INFORMATION'} />
         </div>
         <div className='flex gap-3'>
-          <input type="text" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='First name' />
-          <input type="text" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='Last name' />
+          <input required onChange={onChangeHandler} value={formData.firstName} name='firstName' type="text" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='First name' />
+          <input required onChange={onChangeHandler} value={formData.lastName} name='lastName' type="text" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='Last name' />
         </div>
-        <input type="email" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='Email address' />
-        <input type="text" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='Street' />
+        <input required onChange={onChangeHandler} value={formData.email} name='email' type="email" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='Email address' />
+        <input required onChange={onChangeHandler} value={formData.street} name='street' type="text" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='Street' />
         <div className='flex gap-3'>
-          <input type="text" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='City' />
-          <input type="text" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='State' />
+          <input required onChange={onChangeHandler} value={formData.city} name='city' type="text" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='City' />
+          <input required onChange={onChangeHandler} value={formData.state} name='state' type="text" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='State' />
         </div>
         <div className='flex gap-3'>
-          <input type="number" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='Zipcode' />
-          <input type="text" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='Country' />
+          <input required onChange={onChangeHandler} value={formData.zipCode} name='zipCode' type="number" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='Zipcode' />
+          <input required onChange={onChangeHandler} value={formData.country} name='country' type="text" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='Country' />
         </div>
-        <input type="number" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='Phone' />
+        <input required onChange={onChangeHandler} value={formData.phone} name='phone' type="number" className='border border-gray-300 rounded py-1.5 px-3.5 w-full' placeholder='Phone' />
       </div>
 
 
@@ -69,7 +174,7 @@ export default function PlaceOrder() {
           </div>
 
           <div className='w-full text-end mt-8'>
-            <button onClick={() => navigate('/orders')} className='bg-black text-white px-16 py-3 text-sm '>
+            <button type='submit' className='bg-black text-white px-16 py-3 text-sm '>
               PLACE ORDER
             </button>
 
@@ -78,6 +183,6 @@ export default function PlaceOrder() {
         </div>
       </div>
 
-    </div>
+    </form>
   )
 }
