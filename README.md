@@ -4,7 +4,7 @@ A full-stack e-commerce application built with **React**, **Node.js/Express**, a
 
 ### 🔗 Live Links
 - **🌐 Customer Storefront:** [forever-lngz.vercel.app](https://forever-lngz.vercel.app/)
-- **🛠️ Admin Dashboard:** [forever-lngz.vercel.app](https://forever-lngz.vercel.app/)
+- **🛠️ Admin Dashboard:** [forever-lngz.vercel.app](https://forever-lcz9.vercel.app/)
 
 ---
 
