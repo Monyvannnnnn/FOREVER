@@ -3,8 +3,8 @@
 A full-stack e-commerce application built with **React**, **Node.js/Express**, and **MongoDB**. The project follows a monorepo structure with three independent apps: a customer-facing storefront, an admin dashboard, and a backend API server.
 
 ### 🔗 Live Links
-- **🌐 Customer Storefront:** [forever-lngz.vercel.app](https://forever-lngz.vercel.app/)
-- **🛠️ Admin Dashboard:** [forever-lngz.vercel.app](https://forever-lcz9.vercel.app/)
+- **🌐 Customer Storefront:** [forever.com](https://forever-lngz.vercel.app/)
+- **🛠️ Admin Dashboard:** [forever.admin](https://forever-lcz9.vercel.app/)
 
 ---
 
