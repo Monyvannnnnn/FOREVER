@@ -1,7 +1,13 @@
-
 import orderModel from '../models/orderModel.js';
 import userModel from '../models/userModel.js';
 
+
+const currency = 'inr'
+const deliveryCharge = 10;
+
+
+import Stripe from "stripe";
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 const placeOrder = async (req, res) => {
     try {
@@ -30,6 +36,8 @@ const placeOrder = async (req, res) => {
 const placeOrderStripe = async (req, res) => {
     try {
         const { userId, items, amount, address } = req.body;
+        const { origin } = req.headers;
+        
         const orderData = {
             userId,
             items,
@@ -41,30 +49,35 @@ const placeOrderStripe = async (req, res) => {
         }
         const newOrder = new orderModel(orderData)
         await newOrder.save();
+        const line_items = items.map((item) => ({
+            price_data: {
+                currency: currency,
+                product_data: {
+                    name:item.name
+                },
+                unit_amount: item.price * 100
+            },
+            quantity: item.quantity
+        }))
+         line_items.push({
+            price_data: {
+                currency: currency,
+                product_data: {
+                    name:"Delivery Charges"
+                },
+                unit_amount: deliveryCharge * 100
+            },
+            quantity: 1
+        })
+        
+        const session = await stripe.checkout.sessions.create({
+            line_items,
+            mode:'payment',
+            success_url:`${origin}/verify?success=true&orderId=${newOrder._id}`,
+            cancel_url:`${origin}/verify?success=false`
+        })
         await userModel.findByIdAndUpdate(userId, { cartData: {} })
-        res.json({ success: true, message: "Order Placed via Stripe (Mock)" })
-    } catch (error) {
-        console.log(error)
-        res.json({ success: false, message: error.message })
-    }
-}
-
-const placeOrderRazorpay = async (req, res) => {
-    try {
-        const { userId, items, amount, address } = req.body;
-        const orderData = {
-            userId,
-            items,
-            amount,
-            address,
-            paymentMethod: 'Razorpay',
-            payment: false,
-            date: Date.now()
-        }
-        const newOrder = new orderModel(orderData)
-        await newOrder.save();
-        await userModel.findByIdAndUpdate(userId, { cartData: {} })
-        res.json({ success: true, message: "Order Placed via Razorpay (Mock)" })
+        res.json({ success: true, session_url:session.url })
     } catch (error) {
         console.log(error)
         res.json({ success: false, message: error.message })
@@ -105,5 +118,27 @@ const updateStatus = async (req, res) => {
     }
 }
 
+// Verify Stripe
+const verifyStripe = async (req,res) => {
 
-export { placeOrderRazorpay, placeOrderStripe, allOrders, userOrder, updateStatus, placeOrder }
+    const { orderId, success, userId } = req.body
+
+    try {
+        if (success === "true") {
+            await orderModel.findByIdAndUpdate(orderId, {payment:true});
+            await userModel.findByIdAndUpdate(userId, {cartData: {}})
+            res.json({success: true});
+        } else {
+            await orderModel.findByIdAndDelete(orderId)
+            res.json({success:false})
+        }
+
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:error.message})
+    }
+
+}
+
+
+export { placeOrderStripe, allOrders, userOrder, updateStatus, placeOrder, verifyStripe }
