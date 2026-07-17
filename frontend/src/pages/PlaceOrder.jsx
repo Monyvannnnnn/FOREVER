@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import Title from '../components/Title'
 import CartTotal from '../components/CartTotal'
 import { assets } from '../assets/frontend_assets/assets'
@@ -28,7 +28,7 @@ export default function PlaceOrder() {
     if (!token && !localStorage.getItem('token')) {
       navigate('/login');
     }
-  }, [token]);
+  }, [token, navigate]);
 
   const onChangeHandler = (event) => {
     const name = event.target.name
@@ -68,7 +68,7 @@ export default function PlaceOrder() {
 
       switch (method) {
         // API Calls for COD
-        case 'cod':
+        case 'cod': {
           const response = await axios.post(backendUrl + '/api/order/place', orderData, { headers: { token: activeToken } });
           if (response.data.success) {
             setCartItems({});
@@ -77,28 +77,20 @@ export default function PlaceOrder() {
             toast.error(response.data.message);
           }
           break;
+        }
 
-        case 'stripe':
+        case 'stripe': {
           const responseStripe = await axios.post(backendUrl + '/api/order/stripe', orderData, { headers: { token: activeToken } });
           if (responseStripe.data.success) {
-            toast.success("Order Placed via Stripe (Mock)");
-            setCartItems({});
-            navigate('/orders');
+            const {session_url} = responseStripe.data;
+           window.location.replace(session_url);
           } else {
             toast.error(responseStripe.data.message);
           }
           break;
+        }
 
-        case 'razorpay':
-          const responseRazorpay = await axios.post(backendUrl + '/api/order/razorpay', orderData, { headers: { token: activeToken } });
-          if (responseRazorpay.data.success) {
-            toast.success("Order Placed via Razorpay (Mock)");
-            setCartItems({});
-            navigate('/orders');
-          } else {
-            toast.error(responseRazorpay.data.message);
-          }
-          break;
+
 
         default:
           break;
@@ -154,14 +146,7 @@ export default function PlaceOrder() {
               </p>
               <img className='h-5 mx-4' src={assets.stripe_logo} alt="" />
             </div>
-            <div onClick={() => setMethod('razorpay')} className='flex items-center gap-3 border p-2 px-3 cursor-pointer'>
-              <p className={`min-w-3.5 h-3.5 border rounded-full ${method === 'razorpay' ? 'bg-green-400' : ''}   `} >
 
-
-
-              </p>
-              <img className='h-5 mx-4' src={assets.razorpay_logo} alt="" />
-            </div>
             <div onClick={() => setMethod('cod')} className='flex items-center gap-3 border p-2 px-3 cursor-pointer'>
               <p className={`min-w-3.5 h-3.5 border rounded-full ${method === 'cod' ? 'bg-green-400' : ''}   `} >
 
