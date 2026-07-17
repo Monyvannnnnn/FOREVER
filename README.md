@@ -2,6 +2,10 @@
 
 A full-stack e-commerce application built with **React**, **Node.js/Express**, and **MongoDB**. The project follows a monorepo structure with three independent apps: a customer-facing storefront, an admin dashboard, and a backend API server.
 
+### 🔗 Live Links
+- **🌐 Customer Storefront:** [forever-lngz.vercel.app](https://forever-lngz.vercel.app/)
+- **🛠️ Admin Dashboard:** [forever-lngz.vercel.app](https://forever-lngz.vercel.app/)
+
 ---
 
 ## 📁 Project Structure
@@ -24,7 +28,7 @@ FOREVER/
 | **Admin**    | React 19, Vite 8                                            |
 | **Backend**  | Node.js, Express 5, Mongoose (MongoDB), JWT, Bcrypt         |
 | **Storage**  | Cloudinary (image uploads via Multer)                       |
-| **Payments** | Razorpay                                                    |
+| **Payments** | Stripe                                                      |
 
 ---
 
@@ -171,7 +175,7 @@ frontend/src/
 - 🔐 **User Authentication** — Register & login with JWT-based auth and bcrypt password hashing
 - 📦 **Product Management** — Full CRUD operations with image uploads to Cloudinary
 - 🛒 **Shopping Cart** — Add, remove, and manage items
-- 💳 **Payments** — Razorpay payment gateway integration
+- 💳 **Payments** — Stripe payment gateway integration
 - 📋 **Order Tracking** — View order history and status
 - 🔍 **Search & Filter** — Browse and filter product collections
 - 🛡️ **Admin Dashboard** — Separate admin panel for managing products and orders
