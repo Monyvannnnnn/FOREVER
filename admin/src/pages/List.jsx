@@ -31,15 +31,18 @@ const List = ({ token }) => {
       );
 
       if (response.data.success) {
-        toast.success(response.data.message);
+        toast.dismiss();
+        toast.success(response.data.message, { toastId: "product-remove" });
         await fetchList();
       } else {
-        toast.error(response.data.message);
+        toast.dismiss();
+        toast.error(response.data.message, { toastId: "product-remove" });
         await fetchList();
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
+      toast.dismiss();
+      toast.error(error.message, { toastId: "product-remove" });
 
       await fetchList();
     }

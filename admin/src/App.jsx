@@ -7,6 +7,7 @@ import Order from "./pages/Order";
 import { useState } from "react";
 import Login from "./components/Login";
 import Add from "./pages/Add";
+import Banner from "./pages/Banner";
 import { ToastContainer } from "react-toastify";
 import "react-toastify";
 import { useEffect } from "react";
@@ -21,7 +22,7 @@ const App = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <ToastContainer />
+      <ToastContainer limit={1} autoClose={2000} />
       {token === "" ? (
         <Login setToken={setToken} />
       ) : (
@@ -37,6 +38,7 @@ const App = () => {
                 <Route path="/add" element={<Add token={token}/>} />
                 <Route path="/list" element={<List token={token}/>} />
                 <Route path="/order" element={<Order token={token}/>} />
+                <Route path="/banner" element={<Banner token={token}/>} />
               </Routes>
             </div>
           </div>
