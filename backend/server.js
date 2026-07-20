@@ -12,8 +12,13 @@ import bannerRouter from "./routes/bannerRouter.js";
 const app = express();
 const port = process.env.PORT || 4000;
 dotenv.config();
-connectDB();
-connectCloudinary();
+
+// Ensure DB and Cloudinary connection per request for serverless
+app.use(async (req, res, next) => {
+  await connectDB();
+  connectCloudinary();
+  next();
+});
 
 // middleware
 app.use(express.json());
