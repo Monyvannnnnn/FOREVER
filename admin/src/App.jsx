@@ -11,7 +11,7 @@ import Banner from "./pages/Banner";
 import { ToastContainer } from "react-toastify";
 import "react-toastify";
 import { useEffect } from "react";
-export const backendUrl = import.meta.env.VITE_BACKEND_URL;
+export const backendUrl = (import.meta.env.VITE_BACKEND_URL || "http://localhost:4000").replace(/\/+$/, "");
 export const currency = '$'
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token')?localStorage.getItem('token'):'');

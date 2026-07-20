@@ -15,9 +15,14 @@ dotenv.config();
 connectDB();
 connectCloudinary();
 
-//middleware
+// middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'token']
+}));
+app.options('*', cors());
 
 
 // api endpoints
@@ -33,3 +38,5 @@ app.get("/", (req, res) => {
 })
 
 app.listen(port, () => console.log(`listening on localhost:${port}`));
+
+export default app;
