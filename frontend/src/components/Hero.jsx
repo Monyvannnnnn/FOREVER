@@ -34,7 +34,7 @@ export default function Hero() {
   const currentText = titles[textIndex].substring(0, charIndex);
 
   return (
-    <div className="flex flex-col sm:flex-row border border-gray-400 overflow-hidden min-h-[360px] sm:h-[440px] lg:h-[500px]">
+    <div className="flex flex-col sm:flex-row border border-[#5A3A31] overflow-hidden min-h-[360px] sm:h-[440px] lg:h-[500px]">
       <div className="w-full sm:w-1/2 flex items-center justify-center py-10 sm:py-0 h-full">
         <div className="text-[#5A3A31] w-[280px] sm:w-[350px] lg:w-[440px] flex flex-col justify-center">
           <div className="flex items-center gap-2">
