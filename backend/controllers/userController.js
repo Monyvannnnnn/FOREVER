@@ -78,7 +78,7 @@ const registerUser = async (req, res) => {
 const adminLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const envEmail = (process.env.ADMIN_EMAIL || 'admin@vacci.com').replace(/^['"]|['"]$/g, '').trim();
+        const envEmail = (process.env.ADMIN_EMAIL || 'Admin@vacci.com').replace(/^['"]|['"]$/g, '').trim();
         const envPassword = (process.env.ADMIN_PASSWORD || 'Admin@123').replace(/^['"]|['"]$/g, '').trim();
 
         const inputEmail = (email || '').trim().toLowerCase();
