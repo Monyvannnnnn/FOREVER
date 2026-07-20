@@ -3,8 +3,9 @@
 A full-stack e-commerce application built with **React**, **Node.js/Express**, and **MongoDB**. The project follows a monorepo structure with three independent apps: a customer-facing storefront, an admin dashboard, and a backend API server.
 
 ### 🔗 Live Links
-- **🌐 Customer Storefront:** [forever.com](https://forever-lngz.vercel.app/)
-- **🛠️ Admin Dashboard:** [forever.admin](https://forever-lcz9.vercel.app/)
+- **🌐 Customer Storefront:** [forever-lngz.vercel.app](https://forever-lngz.vercel.app/)
+- **🛠️ Admin Dashboard:** [forever-lcz9.vercel.app](https://forever-lcz9.vercel.app/)
+- **⚡ Backend API:** [forever-ten-ebon.vercel.app](https://forever-ten-ebon.vercel.app/)
 
 ---
 
@@ -13,7 +14,7 @@ A full-stack e-commerce application built with **React**, **Node.js/Express**, a
 ```
 FOREVER/
 ├── frontend/          # Customer-facing storefront (React + Vite + Tailwind CSS)
-├── admin/             # Admin dashboard (React + Vite)
+├── admin/             # Admin dashboard (React + Vite + Easy Crop)
 ├── backend/           # REST API server (Express + MongoDB)
 └── README.md
 ```
@@ -25,7 +26,7 @@ FOREVER/
 | Layer        | Technology                                                  |
 | ------------ | ----------------------------------------------------------- |
 | **Frontend** | React 19, React Router, Tailwind CSS 4, Vite 8              |
-| **Admin**    | React 19, Vite 8                                            |
+| **Admin**    | React 19, Vite 8, React Easy Crop, Browser Image Compression|
 | **Backend**  | Node.js, Express 5, Mongoose (MongoDB), JWT, Bcrypt         |
 | **Storage**  | Cloudinary (image uploads via Multer)                       |
 | **Payments** | Stripe                                                      |
@@ -174,11 +175,12 @@ frontend/src/
 
 - 🔐 **User Authentication** — Register & login with JWT-based auth and bcrypt password hashing
 - 📦 **Product Management** — Full CRUD operations with image uploads to Cloudinary
+- 🖼️ **Homepage Banner & Hero Controls** — Dynamic typewriter hero section with custom banner upload & 1:1 interactive square cropper (`react-easy-crop`) in Admin panel
 - 🛒 **Shopping Cart** — Add, remove, and manage items
 - 💳 **Payments** — Stripe payment gateway integration
 - 📋 **Order Tracking** — View order history and status
 - 🔍 **Search & Filter** — Browse and filter product collections
-- 🛡️ **Admin Dashboard** — Separate admin panel for managing products and orders
+- 🛡️ **Admin Dashboard** — Separate admin panel for managing products, banners, and orders
 - 📱 **Responsive Design** — Mobile-friendly with Tailwind CSS
 
 ---
