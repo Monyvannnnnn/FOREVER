@@ -40,6 +40,11 @@ const Add = ({ token }) => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
+    if (!sizes || sizes.length === 0) {
+      toast.error("Please select at least one size for the product");
+      return;
+    }
+
     setLoading(true);
     try {
       const formData = new FormData();
@@ -207,7 +212,7 @@ const Add = ({ token }) => {
         </div>
 
         <div>
-          <p className="mb-2">Product Sizes</p>
+          <p className="mb-2 font-medium">Product Sizes <span className="text-red-500">*</span></p>
           <div className="flex gap-3">
             {["S", "M", "L", "XL", "XXL"].map((size) => (
               <div
@@ -222,14 +227,19 @@ const Add = ({ token }) => {
               >
                 <p
                   className={`${
-                    sizes.includes(size) ? "bg-pink-100" : "bg-slate-200"
-                  } px-3 py-1 cursor-pointer`}
+                    sizes.includes(size)
+                      ? "bg-[#5A3A31] text-white font-bold border-[#5A3A31]"
+                      : "bg-slate-200 hover:bg-slate-300 text-gray-700 border-transparent"
+                  } px-3.5 py-1.5 cursor-pointer transition-colors border`}
                 >
                   {size}
                 </p>
               </div>
             ))}
           </div>
+          {sizes.length === 0 && (
+            <p className="text-xs text-red-500 mt-1">Please select at least one size</p>
+          )}
         </div>
 
         <div className="flex gap-2 mt-2">

@@ -16,6 +16,11 @@ export default function Product() {
       if (item._id === productId) {
         setProductData(item);
         setImage(item.image[0]);
+        if (!item.sizes || item.sizes.length === 0) {
+          setSize("One Size");
+        } else {
+          setSize("");
+        }
         return null;
       }
     });
@@ -64,17 +69,32 @@ export default function Product() {
             {productData.description}
           </p>
           <div className="flex flex-col gap-4 my-8">
-            <p>Select Size</p>{" "}
-            <div className=" flex gap-2">
-              {productData.sizes.map((item, index) => (
+            <p className="font-medium">Select Size</p>
+            <div className="flex gap-2">
+              {productData.sizes && productData.sizes.length > 0 ? (
+                productData.sizes.map((item, index) => (
+                  <button
+                    type="button"
+                    onClick={() => setSize(item)}
+                    key={index}
+                    className={`border py-2 px-4 font-medium transition-all cursor-pointer ${
+                      item === size
+                        ? "border-[#5A3A31] bg-[#5A3A31] text-white"
+                        : "bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-300"
+                    }`}
+                  >
+                    {item}
+                  </button>
+                ))
+              ) : (
                 <button
-                  onClick={() => setSize(item)}
-                  key={index}
-                  className={`border bg-gray-100 py-2 px-4 ${item === size ? "border-orange-500" : ""} `}
+                  type="button"
+                  onClick={() => setSize("One Size")}
+                  className="border border-[#5A3A31] bg-[#5A3A31] text-white font-medium py-2 px-4 cursor-pointer"
                 >
-                  {item}
+                  One Size
                 </button>
-              ))}
+              )}
             </div>
           </div>
           <button onClick={() => addToCart(productData._id, size)} className="bg-[#5A3A31] text-white font-bold px-8 py-3 text-sm active:bg-[#432A23] hover:bg-[#432A23] transition-colors">
