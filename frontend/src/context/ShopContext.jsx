@@ -9,7 +9,19 @@ export const ShopContext = createContext();
 const ShopContextProvider = (props) => {
   const currency = "$";
   const delivery_fee = 10;
-  const backendUrl = (import.meta.env.VITE_BACKEND_URL || "http://localhost:4000").replace(/\/+$/, "");
+  const cleanBackendUrl = (rawUrl) => {
+    let url = rawUrl || "http://localhost:4000";
+    if (url.includes("VITE_BACKEND_URL")) {
+      url = url.replace(/VITE_BACKEND_URL\s*=?\s*/gi, "").trim();
+    }
+    url = url.trim().replace(/\/+$/, "");
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      url = "https://" + url;
+    }
+    return url;
+  };
+
+  const backendUrl = cleanBackendUrl(import.meta.env.VITE_BACKEND_URL);
   const [search, setSearch] = useState("");
   const [products, setProducts] = useState([]);
   const [banner, setBanner] = useState(null);

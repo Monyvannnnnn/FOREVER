@@ -11,7 +11,19 @@ import Banner from "./pages/Banner";
 import { ToastContainer } from "react-toastify";
 import "react-toastify";
 import { useEffect } from "react";
-export const backendUrl = (import.meta.env.VITE_BACKEND_URL || "http://localhost:4000").replace(/\/+$/, "");
+const cleanBackendUrl = (rawUrl) => {
+  let url = rawUrl || "http://localhost:4000";
+  if (url.includes("VITE_BACKEND_URL")) {
+    url = url.replace(/VITE_BACKEND_URL\s*=?\s*/gi, "").trim();
+  }
+  url = url.trim().replace(/\/+$/, "");
+  if (!url.startsWith("http://") && !url.startsWith("https://")) {
+    url = "https://" + url;
+  }
+  return url;
+};
+
+export const backendUrl = cleanBackendUrl(import.meta.env.VITE_BACKEND_URL);
 export const currency = '$'
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token')?localStorage.getItem('token'):'');
