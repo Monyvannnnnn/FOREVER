@@ -76,17 +76,18 @@ const registerUser = async (req, res) => {
 //route for admin login
 
 const adminLogin = async (req, res) => {
-
-    try{
+    try {
         const { email, password } = req.body;
-        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-            const token = jwt.sign(email+password, process.env.JWT_SECRET);
+        const adminEmail = process.env.ADMIN_EMAIL || 'admin@vacci.com';
+        const adminPassword = process.env.ADMIN_PASSWORD || 'Admin@123';
+
+        if (email === adminEmail && password === adminPassword) {
+            const token = jwt.sign(email+password, process.env.JWT_SECRET || 'greatstack');
             res.json({ success: true, token });
         } else {
             res.json({ success: false, message: "Invalid credentials" });
         }       
-    }catch (error) {
-
+    } catch (error) {
         console.log(error);
         res.json({ success: false, message: "Internal server error" });
     }
