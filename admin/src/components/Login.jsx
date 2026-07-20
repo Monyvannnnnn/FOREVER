@@ -57,7 +57,7 @@ const Login = ({ setToken }) => {
           </div>
           <button
             type="submit"
-            className="mt-2 w-full py-2 px-4 rounded-md text-white bg-black"
+            className="mt-2 w-full py-2 px-4 rounded-md text-white bg-[#5A3A31] font-bold hover:bg-[#432A23] transition-colors"
           >
             Login
           </button>

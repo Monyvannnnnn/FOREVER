@@ -245,13 +245,13 @@ const Add = ({ token }) => {
         </div>
 
         <button 
-          className={`w-28 py-3 mt-4 text-white transition-all ${
-            loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-black active:bg-gray-800'
+          className={`w-28 py-3 mt-4 text-white font-bold transition-all ${
+            loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#5A3A31] hover:bg-[#432A23] active:bg-[#432A23]'
           }`} 
+          disabled={loading} 
           type="submit"
-          disabled={loading}
         >
-          {loading ? `ADDING${dots}` : "ADD"}
+          {loading ? 'ADDING...' : 'ADD'}
         </button>
       </form>
     </div>
