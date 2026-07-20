@@ -1,4 +1,4 @@
-# 🛍️ FOREVER — E-Commerce Platform
+# 🛍️ VACCI — E-Commerce Platform
 
 A full-stack e-commerce application built with **React**, **Node.js/Express**, and **MongoDB**. The project follows a monorepo structure with three independent apps: a customer-facing storefront, an admin dashboard, and a backend API server.
 
