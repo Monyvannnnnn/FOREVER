@@ -34,9 +34,6 @@ const updateBanner = async (req, res) => {
     const result = await cloudinary.uploader.upload(req.file.path, {
       resource_type: "image",
       folder: "banner",
-      transformation: [
-        { width: 900, height: 1200, crop: "fill", gravity: "auto" }
-      ],
     });
 
     if (fs.existsSync(req.file.path)) {
