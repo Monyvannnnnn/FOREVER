@@ -156,7 +156,7 @@ const Banner = ({ token }) => {
             <img
               src={currentBanner}
               alt="Current Banner"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-top"
             />
           </div>
         </div>
@@ -174,7 +174,7 @@ const Banner = ({ token }) => {
                 <img
                   className={
                     croppedPreviewUrl
-                      ? "w-full h-full object-cover"
+                      ? "w-full h-full object-cover object-top"
                       : "w-24 h-24 object-contain opacity-60"
                   }
                   src={croppedPreviewUrl || assets.upload_area}
@@ -217,6 +217,10 @@ const Banner = ({ token }) => {
                 ✕
               </button>
             </div>
+
+            <p className="text-xs text-amber-800 bg-amber-50 p-2.5 rounded border border-amber-200">
+              💡 <strong>Tip:</strong> The top edge of your crop box is aligned with the top of the homepage Hero banner. Position your crop box to include the full face and head.
+            </p>
 
             {/* react-easy-crop Container */}
             <div className="relative w-full h-96 bg-gray-900 overflow-hidden">

@@ -64,7 +64,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
-      <img className="w-full sm:w-1/2 h-[320px] sm:h-full object-cover" src={banner?.image || assets.hero_img} alt="Hero Banner" />
+      <img className="w-full sm:w-1/2 h-[320px] sm:h-full object-cover object-top" src={banner?.image || assets.hero_img} alt="Hero Banner" />
     </div>
   );
 }
