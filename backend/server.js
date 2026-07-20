@@ -7,6 +7,7 @@ import userRouter from "./routes/userRoute.js";
 import productRouter from "./routes/productRoute.js";
 import cartRouter from "./routes/cartRouter.js";
 import orderRouter from "./routes/orderRouter.js";
+import bannerRouter from "./routes/bannerRouter.js";
 // app config
 const app = express();
 const port = process.env.PORT || 4000;
@@ -25,7 +26,8 @@ app.use('/api/user',userRouter);
 app.use('/api/product',productRouter);
 app.use('/api/cart',cartRouter);
 app.use('/api/order',orderRouter)
-
+//update banner
+app.use("/api/banner", bannerRouter);
 app.get("/", (req, res) => {
     res.send("API working")
 })
