@@ -18,6 +18,10 @@ a.active hr {
   transform: scaleX(1) !important;
 }
 
+body {
+  color: #5A3A31;
+}
+
 * {
   font-family: Outfit;
 }
@@ -34,7 +38,7 @@ a.active hr {
 
 @media (max-width: 640px) {
   a.active {
-    background-color: black;
+    background-color: #5A3A31;
     color: white;
   }
 }

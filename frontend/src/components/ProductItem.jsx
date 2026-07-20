@@ -9,12 +9,12 @@ const {currency } = useContext(ShopContext);
 
 
   return (
-    <Link className="text-gray-700 cursor-poiter" to={`/product/${id}`}>
+    <Link className="text-[#5A3A31] cursor-pointer" to={`/product/${id}`}>
       <div className="overflow-hidden">
         <img className="hover:scale-110 transition ease-in-out" src={image[0]} alt="" />
       </div>
-      <p className="pt-3 pb-1 text-sm">{name}</p>
-      <p className="text-sm font-medium">{currency}{price}</p>
+      <p className="pt-3 pb-1 text-sm text-[#5A3A31] font-medium">{name}</p>
+      <p className="text-sm font-bold text-[#5A3A31]">{currency}{price}</p>
     </Link>
   )
 }

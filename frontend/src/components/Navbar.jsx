@@ -20,20 +20,20 @@ export default function Navbar() {
     navigate("/login");
   };
   return (
-    <div className="flex items-center justify-between py-5 font-medium">
+    <div className="flex mb-2 mt-2 items-center justify-between py-2.5 font-bold text-[#5A3A31]">
       <Link to="/">
-        <img src={assets.logo} alt="Logo" className="w-36" />
+        <img src={assets.logo} alt="Logo" className="w-20 sm:w-24" />
       </Link>
 
-      <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
+      <ul className="hidden sm:flex gap-5 text-sm font-bold text-[#5A3A31]">
         {navLinks.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             className="flex flex-col items-center gap-1 nav-link-animated"
           >
-            <p className="hover:text-black transition-colors duration-300">{item.label}</p>
-            <hr className="h-[1.5px] w-4/5 border-none bg-gray-700" />
+            <p className="font-bold tracking-wider hover:opacity-80 transition-colors duration-300">{item.label}</p>
+            <hr className="h-[2px] w-4/5 border-none bg-[#5A3A31]" />
           </NavLink>
         ))}
       </ul>
@@ -46,7 +46,7 @@ export default function Navbar() {
           }}
           src={assets.search_icon}
           alt="Search"
-          className="w-5 cursor-pointer "
+          className="w-5 cursor-pointer"
         />
 
         <div className="group relative">
@@ -59,10 +59,10 @@ export default function Navbar() {
           {/* Dropdown Menu */}
           {token && (
             <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
-              <div className="flex w-36 flex-col gap-2 rounded bg-slate-100 px-5 py-3 text-gray-500">
-                <p className="cursor-pointer hover:text-black">My Account</p>
-                <p onClick={() => navigate('/orders')} className="cursor-pointer hover:text-black">Orders</p>
-                <p onClick={logout} className="cursor-pointer hover:text-black">Logout</p>
+              <div className="flex w-36 flex-col gap-2 rounded bg-slate-100 px-5 py-3 text-[#5A3A31]">
+                <p className="cursor-pointer hover:opacity-80">My Account</p>
+                <p onClick={() => navigate('/orders')} className="cursor-pointer hover:opacity-80">Orders</p>
+                <p onClick={logout} className="cursor-pointer hover:opacity-80">Logout</p>
               </div>
             </div>
           )}
@@ -73,7 +73,7 @@ export default function Navbar() {
             alt="Cart"
             className="w-5 cursor-pointer"
           />
-          <p className="absolute -right-1.5 bottom-1.25 aspect-square w-4 rounded-full bg-black text-center text-[8px] leading-4 text-white">
+          <p className="absolute -right-1.5 bottom-1.25 aspect-square w-4 rounded-full bg-[#5A3A31] text-center text-[8px] leading-4 text-white">
             {getCartCount()}
           </p>
         </Link>
@@ -92,12 +92,12 @@ export default function Navbar() {
       </div>
 
       <div
-        className={`absolute right-0 top-0  bottom-0 overflow-hidden bg-white transition-all duration-300 ${visible ? "w-full" : "w-0"
+        className={`absolute right-0 top-0 bottom-0 overflow-hidden bg-white transition-all duration-300 ${visible ? "w-full" : "w-0"
           }`}
       >
-        <div className="flex flex-col text-gray-600">
+        <div className="flex flex-col text-[#5A3A31]">
           <div
-            className="flex items-center gap-4 p-3"
+            className="flex items-center gap-4 p-3 cursor-pointer"
             onClick={() => setVisible(false)}
           >
             <img

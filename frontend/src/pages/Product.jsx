@@ -77,7 +77,7 @@ export default function Product() {
               ))}
             </div>
           </div>
-          <button onClick={() => addToCart(productData._id, size)} className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700">
+          <button onClick={() => addToCart(productData._id, size)} className="bg-[#5A3A31] text-white font-bold px-8 py-3 text-sm active:bg-[#432A23] hover:bg-[#432A23] transition-colors">
             ADD TO CART
           </button>
           <hr className="mt-8 sm:w-4/5" />
@@ -93,9 +93,9 @@ export default function Product() {
           <b className="border px-5 py-3 text-sm">Description</b>
           <p className="border px-5 py-3 text-sm">Reviews(122)</p>
         </div>
-        <div className="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500">
-          <p>An e-commerce website is an online platform that facilitates the buying and selling of products or services over the internet. It serves as a virtual marketplace where businesses and individuals can showcase their products, interact with customers, and conduct transactions without the need for a physical presence. E-commerce websites have gained immense popularity due to their convenience, accessibility, and the global reach they offer.</p>
-          <p>E-commerce websites typically display products or services along with detailed descriptions, images, prices, and any available variations (e.g., sizes, colors). Each product usually has its own dedicated page with relevant information.</p>
+        <div className="flex flex-col gap-4 border px-6 py-6 text-sm text-[#5A3A31]/80 leading-relaxed">
+          <p>Welcome to Vacci — your premier destination for modern minimalist fashion and timeless wardrobe essentials. Every garment in our collection is thoughtfully designed using high-grade fabrics, clean monoline silhouettes, and meticulous craftsmanship to elevate your daily style.</p>
+          <p>Our products undergo thorough quality assurance to ensure long-lasting durability, exceptional comfort, and a tailored fit. Experience seamless online shopping with fast worldwide shipping, easy exchanges, and dedicated customer care.</p>
         </div>
       </div>
       <RelatedProducts category={productData.category} subCategory={productData.subCategory} id={productData._id} />

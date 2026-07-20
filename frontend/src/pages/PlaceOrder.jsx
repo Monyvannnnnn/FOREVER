@@ -159,7 +159,7 @@ export default function PlaceOrder() {
           </div>
 
           <div className='w-full text-end mt-8'>
-            <button type='submit' className='bg-black text-white px-16 py-3 text-sm '>
+            <button type='submit' className='bg-[#5A3A31] text-white font-bold px-16 py-3 text-sm hover:bg-[#432A23] transition-colors'>
               PLACE ORDER
             </button>
 

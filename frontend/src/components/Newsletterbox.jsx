@@ -4,13 +4,11 @@ const Newsletterbox = () => {
   };
   return (
     <div className="text-center">
-      <p className="text-2xl font-meduim text-gray-800">
+      <p className="text-2xl font-bold text-[#5A3A31]">
         Subscribe now & get 20% off
       </p>
-      <p className="text-gray-400 mt-3">
-        uptas corrupti, distinctio laboriosam voluptatum? Exercitationem
-        laboriosam, obcaecati officiis blanditiis facilis earum vero voluptas,
-        ad deleniti nulla delectus qui quam.
+      <p className="text-[#5A3A31]/80 mt-3 max-w-md mx-auto text-sm">
+        Join our VIP newsletter to unlock exclusive early access to new releases, special discounts, and seasonal style guides.
       </p>
       <form
         onSubmit={onSubmitHandler}
@@ -23,7 +21,7 @@ const Newsletterbox = () => {
         />
         <button
           type="submit"
-          className="bg-black text-white text-xs px-10 py-4"
+          className="bg-[#5A3A31] text-white font-bold text-xs px-10 py-4 hover:bg-[#432A23] transition-colors"
         >
           SUBSCRIBE
         </button>

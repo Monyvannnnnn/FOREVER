@@ -64,9 +64,8 @@ export default function Cart() {
 
           <CartTotal />
           <div onClick={() => navigate('/place-order')} className='w-full text-end'>
-            <button className='bg-black text-white text-sm my-8 px-8 py-3'>
-              PROCCED TO CHECKOUT
-
+            <button className='bg-[#5A3A31] text-white font-bold text-sm my-8 px-8 py-3 hover:bg-[#432A23] transition-colors'>
+              PROCEED TO CHECKOUT
             </button>
 
           </div>

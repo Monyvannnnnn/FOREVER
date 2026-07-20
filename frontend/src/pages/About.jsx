@@ -12,11 +12,11 @@ export default function About() {
 
       <div className='my-10 flex flex-col md:flex-row gap-16'>
         <img className='w-full md:max-w-[450px]' src={assets.about_img} alt="" />
-        <div className='flex flex-col justify-center gap-6 md:w-2/4 text-gray-600'>
-          <p>Forever was born out of a passion for innovation and a desire to revolutionize the way people shop online. Our journey began with a simple idea: to provide a platform where customers can easily discover, explore, and purchase a wide range of products from the comfort of their homes.</p>
-          <p>Since our inception, we've worked tirelessly to curate a diverse selection of high-quality products that cater to every taste and preference. From fashion and beauty to electronics and home essentials, we offer an extensive collection sourced from trusted brands and suppliers.</p>
-          <b className='text-gray-800'>Our Mission</b>
-          <p>Our mission at Forever is to empower customers with choice, convenience, and confidence. We're dedicated to providing a seamless shopping experience that exceeds expectations, from browsing and ordering to delivery and beyond.</p>
+        <div className='flex flex-col justify-center gap-6 md:w-2/4 text-[#5A3A31]/80'>
+          <p>Vacci was born out of a passion for modern aesthetics, clean monoline design, and a desire to elevate everyday wardrobe essentials. Our journey began with a clear mission: to offer premium, thoughtfully crafted garments that blend effortless comfort with timeless style.</p>
+          <p>Since our inception, we've worked tirelessly to curate a refined selection of high-quality apparel that caters to contemporary tastes. From everyday classics to modern statement pieces, we focus on superior craftsmanship and durable materials.</p>
+          <b className='text-[#5A3A31] font-bold'>Our Mission</b>
+          <p>Our mission at Vacci is to empower individuals with confidence through versatile, minimalist fashion. We are committed to providing an exceptional online shopping experience from discovery to delivery.</p>
         </div>
       </div>
 
