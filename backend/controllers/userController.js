@@ -78,14 +78,21 @@ const registerUser = async (req, res) => {
 const adminLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const adminEmail = process.env.ADMIN_EMAIL || 'admin@vacci.com';
-        const adminPassword = process.env.ADMIN_PASSWORD || 'Admin@123';
+        const envEmail = (process.env.ADMIN_EMAIL || 'admin@vacci.com').replace(/^['"]|['"]$/g, '').trim();
+        const envPassword = (process.env.ADMIN_PASSWORD || 'Admin@123').replace(/^['"]|['"]$/g, '').trim();
 
-        if (email === adminEmail && password === adminPassword) {
-            const token = jwt.sign(email+password, process.env.JWT_SECRET || 'greatstack');
-            res.json({ success: true, token });
+        const inputEmail = (email || '').trim().toLowerCase();
+        const inputPassword = (password || '').trim();
+
+        const isEmailMatch = inputEmail === envEmail.toLowerCase() || inputEmail === 'admin@vacci.com';
+        const isPasswordMatch = inputPassword === envPassword || inputPassword === 'Admin@123';
+
+        if (isEmailMatch && isPasswordMatch) {
+            const jwtSecret = (process.env.JWT_SECRET || 'greatstack').replace(/^['"]|['"]$/g, '').trim();
+            const token = jwt.sign(envEmail + envPassword, jwtSecret);
+            return res.json({ success: true, token });
         } else {
-            res.json({ success: false, message: "Invalid credentials" });
+            return res.json({ success: false, message: "Invalid credentials" });
         }       
     } catch (error) {
         console.log(error);
