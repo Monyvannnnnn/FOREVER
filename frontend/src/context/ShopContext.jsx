@@ -12,6 +12,7 @@ const ShopContextProvider = (props) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [search, setSearch] = useState("");
   const [products, setProducts] = useState([]);
+  const [banner, setBanner] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
 
   const [showSearch, setShowSearch] = useState(false);
@@ -132,9 +133,22 @@ const ShopContextProvider = (props) => {
     }
   };
 
+  const getBannerData = async () => {
+    try {
+      const url = backendUrl || "http://localhost:4000";
+      const response = await axios.get(url + "/api/banner");
+      if (response.data.success && response.data.banner) {
+        setBanner(response.data.banner);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     getProductsData();
+    getBannerData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -156,6 +170,8 @@ const ShopContextProvider = (props) => {
 
   const value = {
     products,
+    banner,
+    getBannerData,
     currency,
     delivery_fee,
     search,

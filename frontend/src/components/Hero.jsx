@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { assets } from "../assets/frontend_assets/assets";
+import { ShopContext } from "../context/ShopContext";
 
 export default function Hero() {
+  const { banner } = useContext(ShopContext);
   const titles = ["Latest Arrivals", "New Collections", "Modern Fashion", "Exclusive Styles"];
   const [textIndex, setTextIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
@@ -32,8 +34,8 @@ export default function Hero() {
   const currentText = titles[textIndex].substring(0, charIndex);
 
   return (
-    <div className="flex flex-col sm:flex-row border border-gray-400">
-      <div className="w-full sm:w-1/2 flex items-center justify-center py-10 sm:py-0">
+    <div className="flex flex-col sm:flex-row border border-gray-400 overflow-hidden min-h-[360px] sm:h-[440px] lg:h-[500px]">
+      <div className="w-full sm:w-1/2 flex items-center justify-center py-10 sm:py-0 h-full">
         <div className="text-[#5A3A31] w-[280px] sm:w-[350px] lg:w-[440px] flex flex-col justify-center">
           <div className="flex items-center gap-2">
             <p className="w-8 md:w-11 h-[2px] bg-[#5A3A31]"></p>
@@ -62,7 +64,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
-      <img className="w-full sm:w-1/2" src={assets.hero_img} alt="Hero" />
+      <img className="w-full sm:w-1/2 h-[320px] sm:h-full object-cover" src={banner?.image || assets.hero_img} alt="Hero Banner" />
     </div>
   );
 }
