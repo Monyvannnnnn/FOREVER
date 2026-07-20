@@ -28,7 +28,7 @@ export default function Product() {
 
   useEffect(() => {
     fetchProductData();
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [productId, products]);
 
   return productData ? (
