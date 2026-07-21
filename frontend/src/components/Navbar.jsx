@@ -38,7 +38,7 @@ export default function Navbar() {
         ))}
       </ul>
 
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4">
         <img
           onClick={() => {
             setShowSearch(true);
@@ -46,19 +46,19 @@ export default function Navbar() {
           }}
           src={assets.search_icon}
           alt="Search"
-          className="w-5 cursor-pointer"
+          className="w-4.5 sm:w-5 cursor-pointer"
         />
 
-        <div className="group relative">
+        <div className="group relative flex items-center">
           <img
             onClick={() => token ? null : navigate('/login')}
             src={assets.profile_icon}
             alt="User"
-            className="w-5 cursor-pointer"
+            className="w-4.5 sm:w-5 cursor-pointer"
           />
           {/* Dropdown Menu */}
           {token && (
-            <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
+            <div className="group-hover:block hidden absolute dropdown-menu right-0 top-full pt-2">
               <div className="flex w-36 flex-col gap-2 rounded bg-slate-100 px-5 py-3 text-[#5A3A31]">
                 <p className="cursor-pointer hover:opacity-80">My Account</p>
                 <p onClick={() => navigate('/orders')} className="cursor-pointer hover:opacity-80">Orders</p>
@@ -75,7 +75,7 @@ export default function Navbar() {
             viewBox="0 0 24 24"
             strokeWidth={1.8}
             stroke="currentColor"
-            className="w-5 h-5 cursor-pointer"
+            className="w-4.5 h-4.5 sm:w-5 sm:h-5 cursor-pointer"
           >
             <path
               strokeLinecap="round"
@@ -83,18 +83,18 @@ export default function Navbar() {
               d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
             />
           </svg>
-          <p className="absolute -right-1.5 bottom-1.25 aspect-square w-4 rounded-full bg-[#5A3A31] text-center text-[8px] leading-4 text-white">
+          <p className="absolute -right-1.5 -bottom-0.5 aspect-square w-3.5 sm:w-4 rounded-full bg-[#5A3A31] text-center text-[7px] sm:text-[8px] leading-3.5 sm:leading-4 text-white">
             {getFavoritesCount()}
           </p>
         </Link>
 
-        <Link to="/cart" className="relative">
+        <Link to="/cart" className="relative flex items-center">
           <img
             src={assets.cart_icon}
             alt="Cart"
-            className="w-5 cursor-pointer"
+            className="w-4.5 sm:w-5 cursor-pointer"
           />
-          <p className="absolute -right-1.5 bottom-1.25 aspect-square w-4 rounded-full bg-[#5A3A31] text-center text-[8px] leading-4 text-white">
+          <p className="absolute -right-1.5 -bottom-0.5 aspect-square w-3.5 sm:w-4 rounded-full bg-[#5A3A31] text-center text-[7px] sm:text-[8px] leading-3.5 sm:leading-4 text-white">
             {getCartCount()}
           </p>
         </Link>
