@@ -38,7 +38,7 @@ export default function Product() {
     : 30;
 
   return productData ? (
-    <div className="border-t-2 pt-10 transition-opacity ease-in-out duration-500 opacity-100">
+    <div className="pt-10 transition-opacity ease-in-out duration-500 opacity-100">
       <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
         <div className="flex-1 flex flex-row gap-4">
           <div className="flex flex-col gap-2 w-[12%] sm:w-[9.5%] max-w-[65px] sm:max-w-[80px] shrink-0 overflow-y-auto">

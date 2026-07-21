@@ -6,7 +6,7 @@ import Newsletterbox from '../components/Newsletterbox'
 export default function About() {
   return (
     <div>
-      <div className=' text-2xl text-center pt-8 border-t'>
+      <div className=' text-2xl text-center pt-8'>
         <Title text1={'ABOUT'} text2={'US'} />
       </div>
 

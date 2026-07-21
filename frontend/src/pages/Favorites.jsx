@@ -20,7 +20,7 @@ export default function Favorites() {
   };
 
   return (
-    <div className="border-t pt-8 pb-16 min-h-[60vh]">
+    <div className="pt-8 pb-16 min-h-[60vh]">
       <div className="text-2xl mb-6">
         <Title text1={"WISH"} text2={"LIST"} />
         <p className="text-sm text-gray-500 font-normal mt-1">

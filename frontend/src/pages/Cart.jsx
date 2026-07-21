@@ -28,7 +28,7 @@ export default function Cart() {
 
   }, [cartItems, products])
   return (
-    <div className='border-t pt-14'>
+    <div className='pt-14'>
 
       <div className='text-2xl mb-3'>
         <Title text1={'YOUR'} text2={'CART'} />
