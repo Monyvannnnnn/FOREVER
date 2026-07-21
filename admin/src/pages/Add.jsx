@@ -14,6 +14,10 @@ const Add = ({ token }) => {
   const [image2, setImage2] = useState(false);
   const [image3, setImage3] = useState(false);
   const [image4, setImage4] = useState(false);
+  const [image5, setImage5] = useState(false);
+  const [image6, setImage6] = useState(false);
+  const [image7, setImage7] = useState(false);
+  const [image8, setImage8] = useState(false);
 
   // Form Field States
   const [name, setName] = useState("");
@@ -61,6 +65,10 @@ const Add = ({ token }) => {
       image2 && formData.append("image2", image2);
       image3 && formData.append("image3", image3);
       image4 && formData.append("image4", image4);
+      image5 && formData.append("image5", image5);
+      image6 && formData.append("image6", image6);
+      image7 && formData.append("image7", image7);
+      image8 && formData.append("image8", image8);
 
       const response = await axios.post(backendUrl + "/api/product/add", formData, {
         headers: { token }
@@ -76,6 +84,10 @@ const Add = ({ token }) => {
         setImage2(false);
         setImage3(false);
         setImage4(false);
+        setImage5(false);
+        setImage6(false);
+        setImage7(false);
+        setImage8(false);
         setSizes([]);
         setBestseller(false);
       } else {
@@ -94,7 +106,7 @@ const Add = ({ token }) => {
       <form onSubmit={onSubmitHandler} className="flex flex-col w-full items-start gap-3">
         <div>
           <p className="mb-2">Upload Image</p>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-4 gap-2 max-w-[340px]">
             <label htmlFor="image1">
               <img
                 className="w-20 cursor-pointer"
@@ -144,6 +156,58 @@ const Add = ({ token }) => {
                 onChange={(e) => setImage4(e.target.files[0])}
                 type="file"
                 id="image4"
+                hidden
+              />
+            </label>
+            <label htmlFor="image5">
+              <img
+                className="w-20 cursor-pointer"
+                src={!image5 ? assets.upload_area : URL.createObjectURL(image5)}
+                alt=""
+              />
+              <input
+                onChange={(e) => setImage5(e.target.files[0])}
+                type="file"
+                id="image5"
+                hidden
+              />
+            </label>
+            <label htmlFor="image6">
+              <img
+                className="w-20 cursor-pointer"
+                src={!image6 ? assets.upload_area : URL.createObjectURL(image6)}
+                alt=""
+              />
+              <input
+                onChange={(e) => setImage6(e.target.files[0])}
+                type="file"
+                id="image6"
+                hidden
+              />
+            </label>
+            <label htmlFor="image7">
+              <img
+                className="w-20 cursor-pointer"
+                src={!image7 ? assets.upload_area : URL.createObjectURL(image7)}
+                alt=""
+              />
+              <input
+                onChange={(e) => setImage7(e.target.files[0])}
+                type="file"
+                id="image7"
+                hidden
+              />
+            </label>
+            <label htmlFor="image8">
+              <img
+                className="w-20 cursor-pointer"
+                src={!image8 ? assets.upload_area : URL.createObjectURL(image8)}
+                alt=""
+              />
+              <input
+                onChange={(e) => setImage8(e.target.files[0])}
+                type="file"
+                id="image8"
                 hidden
               />
             </label>

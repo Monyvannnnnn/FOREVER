@@ -4,7 +4,7 @@ const Title = ({ text1, text2 }) => {
       <p className="text-gray-500">
         {text1} <span className="text-[#5A3A31] font-medium">{text2}</span>
       </p>
-      <p className="w-8 sm:w-12 h-[1px] sm:h-[2px] bg-[#5A3A31]"></p>
+      <p className="w-8 sm:w-12   sm:h-[2px] bg-[#5A3A31]"></p>
     </div>
   );
 };

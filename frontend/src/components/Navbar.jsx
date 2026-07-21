@@ -92,8 +92,9 @@ export default function Navbar() {
       </div>
 
       <div
-        className={`absolute right-0 top-0 bottom-0 overflow-hidden bg-white transition-all duration-300 ${visible ? "w-full" : "w-0"
-          }`}
+        className={`fixed top-0 right-0 bottom-0 z-50 overflow-hidden bg-white transition-all duration-500 ease-in-out ${
+          visible ? "w-full" : "w-0"
+        }`}
       >
         <div className="flex flex-col text-[#5A3A31]">
           <div

@@ -56,7 +56,7 @@ export default function Hero() {
                 ))
               )}
             </span>
-            <span className="inline-block w-[3px] h-6 sm:h-8 lg:h-10 bg-[#5A3A31] ml-1.5 shrink-0 animate-pulse rounded-full opacity-90"></span>
+            <span className="inline-block w-[3px] h-6 sm:h-8 lg:h-10 bg-[#5A3A31] ml-1.5 shrink-0 typewriter-cursor rounded-full"></span>
           </h1>
           <div className="flex items-center gap-2 cursor-pointer group">
             <p className="font-bold text-sm md:text-base tracking-wider group-hover:underline">SHOP NOW</p>

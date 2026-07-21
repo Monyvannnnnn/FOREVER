@@ -3,19 +3,20 @@ import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/frontend_assets/assets";
 import RelatedProducts from "../components/RelatedProducts";
+import DiscountTag from "../components/DiscountTag";
 
 export default function Product() {
   const { products, currency, addToCart } = useContext(ShopContext);
   const { productId } = useParams();
   const [productData, setProductData] = useState(false);
-  const [image, setImage] = useState("");
+  const [imgIndex, setImgIndex] = useState(0);
   const [size, setSize] = useState("");
 
   const fetchProductData = async () => {
     products.map((item) => {
       if (item._id === productId) {
         setProductData(item);
-        setImage(item.image[0]);
+        setImgIndex(0);
         if (!item.sizes || item.sizes.length === 0) {
           setSize("One Size");
         } else {
@@ -31,41 +32,93 @@ export default function Product() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [productId, products]);
 
+  const strikePrice = productData && (productData.oldPrice || (productData.price ? (productData.price * 1.4).toFixed(2) : null));
+  const discountPercent = strikePrice
+    ? Math.round(((parseFloat(strikePrice) - productData.price) / parseFloat(strikePrice)) * 100)
+    : 30;
+
   return productData ? (
     <div className="border-t-2 pt-10 transition-opacity ease-in-out duration-500 opacity-100">
       <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
-        <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
-          <div className="flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
+        <div className="flex-1 flex flex-row gap-4">
+          <div className="flex flex-col gap-2 w-[12%] sm:w-[9.5%] max-w-[65px] sm:max-w-[80px] shrink-0 overflow-y-auto">
             {productData.image.map((item, index) => {
               return (
                 <img
-                  onClick={() => setImage(item)}
+                  onClick={() => setImgIndex(index)}
                   key={index}
                   src={item}
                   alt={`Product image ${index + 1}`}
-                  className="w-[24%] sm:w-full sm:mb-3 shrink-0 cursor-pointer"
+                  className={`w-full aspect-[3/4] object-cover cursor-pointer transition-all border ${
+                    index === imgIndex ? "border-2 border-[#5A3A31]" : "border border-gray-200 hover:border-gray-400"
+                  }`}
                 />
               );
             })}
           </div>
-          <div className="w-full sm:w-[80%]">
-            <img src={image} alt="Product image" className="w-full h-auto" />
+          <div className="flex-1 relative group overflow-hidden bg-gray-100 flex items-center min-h-[350px]">
+            <div
+              className="flex w-full h-full transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${imgIndex * 100}%)` }}
+            >
+              {productData.image.map((item, index) => (
+                <div key={index} className="w-full shrink-0 flex items-center justify-center">
+                  <img
+                    src={item}
+                    alt={`Product view ${index + 1}`}
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {productData.image && productData.image.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  aria-label="Previous image"
+                  onClick={() =>
+                    setImgIndex((prev) => (prev === 0 ? productData.image.length - 1 : prev - 1))
+                  }
+                  className="absolute left-3 top-1/2 -translate-y-1/2 bg-white text-black p-2.5 rounded-full shadow-lg hover:bg-gray-100 active:scale-90 transition-all z-10 cursor-pointer flex items-center justify-center"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next image"
+                  onClick={() =>
+                    setImgIndex((prev) => (prev === productData.image.length - 1 ? 0 : prev + 1))
+                  }
+                  className="absolute right-3 top-1/2 -translate-y-1/2 bg-white text-black p-2.5 rounded-full shadow-lg hover:bg-gray-100 active:scale-90 transition-all z-10 cursor-pointer flex items-center justify-center"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                  </svg>
+                </button>
+              </>
+            )}
           </div>
         </div>
         <div className="flex-1">
           <h1 className="font-medium text-2xl mt-2">{productData.name}</h1>
-          <div className="flex items-center gap-1 mt-2 ">
-            <img src={assets.star_icon} alt="" className="w-3.5" />
-            <img src={assets.star_icon} alt="" className="w-3.5" />
-            <img src={assets.star_icon} alt="" className="w-3.5" />
-            <img src={assets.star_icon} alt="" className="w-3.5" />
-            <img src={assets.star_dull_icon} alt="" className="w-3.5" />
-            <p className="pl-2">(140)</p>
+          <div className="flex items-center gap-2.5 mt-4 flex-wrap">
+            <span className="text-3xl font-bold text-red-600">
+              US {currency}{productData.price}
+            </span>
+            {discountPercent > 0 && (
+              <span className="text-xl font-bold text-black">
+                -{discountPercent}%
+              </span>
+            )}
+            {strikePrice && (
+              <span className="text-xl text-gray-400 line-through">
+                US {currency}{strikePrice}
+              </span>
+            )}
           </div>
-          <p className="mt-5 text-3xl font-medium">
-            {currency}
-            {productData.price}
-          </p>
           <p className="mt-5 text-gray-500 md:w-4/5">
             {productData.description}
           </p>
