@@ -3,9 +3,9 @@
 A full-stack e-commerce application built with **React**, **Node.js/Express**, and **MongoDB**. The project follows a monorepo structure with three independent apps: a customer-facing storefront, an admin dashboard, and a backend API server.
 
 ### 🔗 Live Links
-- **🌐 Customer Storefront:** [forever-lngz.vercel.app](https://forever-lngz.vercel.app/)
-- **🛠️ Admin Dashboard:** [forever-lcz9.vercel.app](https://forever-lcz9.vercel.app/)
-- **⚡ Backend API:** [forever-ten-ebon.vercel.app](https://forever-ten-ebon.vercel.app/)
+- **🌐 Customer Storefront:** [Vacci.com](https://vacci-user.vercel.app/)
+- **🛠️ Admin Dashboard:** [Vacci-admin.com](https://vacci-admin.vercel.app/)
+
 
 ---
 
