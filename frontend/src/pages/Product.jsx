@@ -32,11 +32,35 @@ export default function Product() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [productId, products]);
 
-  const hasExplicitDiscount = productData && productData.oldPrice && Number(productData.oldPrice) > Number(productData.price);
-  const strikePrice = hasExplicitDiscount ? productData.oldPrice : null;
-  const discountPercent = strikePrice
-    ? Math.round(((parseFloat(strikePrice) - productData.price) / parseFloat(strikePrice)) * 100)
-    : 0;
+  const getDiscountDetails = (price, oldPrice, tag) => {
+    const numPrice = Number(price) || 0;
+    const numOldPrice = Number(oldPrice) || 0;
+
+    if (numOldPrice > numPrice) {
+      const pct = Math.round(((numOldPrice - numPrice) / numOldPrice) * 100);
+      return { strikePrice: numOldPrice, discountPercent: pct };
+    }
+
+    if (tag) {
+      const match = tag.match(/(\d+)%/);
+      if (match) {
+        const pct = parseInt(match[1], 10);
+        if (pct > 0 && pct < 100) {
+          const calculatedOld = Math.round(numPrice / (1 - pct / 100));
+          return { strikePrice: calculatedOld, discountPercent: pct };
+        }
+      }
+      const defaultOld = Math.round(numPrice * 1.3);
+      const defaultPct = Math.round(((defaultOld - numPrice) / defaultOld) * 100);
+      return { strikePrice: defaultOld, discountPercent: defaultPct };
+    }
+
+    return { strikePrice: null, discountPercent: 0 };
+  };
+
+  const { strikePrice, discountPercent } = productData
+    ? getDiscountDetails(productData.price, productData.oldPrice, productData.tag)
+    : { strikePrice: null, discountPercent: 0 };
 
   return productData ? (
     <div className="pt-10 transition-opacity ease-in-out duration-500 opacity-100">
