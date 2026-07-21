@@ -32,10 +32,11 @@ export default function Product() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [productId, products]);
 
-  const strikePrice = productData && (productData.oldPrice || (productData.price ? (productData.price * 1.4).toFixed(2) : null));
+  const hasExplicitDiscount = productData && productData.oldPrice && Number(productData.oldPrice) > Number(productData.price);
+  const strikePrice = hasExplicitDiscount ? productData.oldPrice : null;
   const discountPercent = strikePrice
     ? Math.round(((parseFloat(strikePrice) - productData.price) / parseFloat(strikePrice)) * 100)
-    : 30;
+    : 0;
 
   return productData ? (
     <div className="pt-10 transition-opacity ease-in-out duration-500 opacity-100">
@@ -57,6 +58,7 @@ export default function Product() {
             })}
           </div>
           <div className="flex-1 relative group overflow-hidden bg-gray-100 flex items-center min-h-[350px]">
+            <DiscountTag tag={productData.tag} discountPercent={discountPercent} />
             <div
               className="flex w-full h-full transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${imgIndex * 100}%)` }}
@@ -108,10 +110,16 @@ export default function Product() {
             <span className="text-3xl font-bold text-red-600">
               US {currency}{productData.price}
             </span>
-            {discountPercent > 0 && (
-              <span className="text-xl font-bold text-black">
-                -{discountPercent}%
+            {productData.tag ? (
+              <span className="text-lg font-bold text-white bg-[#5A3A31] px-2.5 py-0.5 rounded shadow-sm">
+                {productData.tag}
               </span>
+            ) : (
+              discountPercent > 0 && (
+                <span className="text-xl font-bold text-black">
+                  -{discountPercent}%
+                </span>
+              )
             )}
             {strikePrice && (
               <span className="text-xl text-gray-400 line-through">

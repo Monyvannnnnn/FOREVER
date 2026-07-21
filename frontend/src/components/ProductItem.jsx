@@ -3,14 +3,15 @@ import { Link } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext.jsx";
 import DiscountTag from "./DiscountTag.jsx";
 
-const ProductItem = ({ id, image, name, price, oldPrice }) => {
+const ProductItem = ({ id, image, name, price, oldPrice, tag }) => {
   const { currency, favorites, toggleFavorite } = useContext(ShopContext);
   const isFavorite = favorites ? favorites.includes(id) : false;
 
-  const strikePrice = oldPrice || (price ? (price * 1.4).toFixed(2) : null);
+  const hasExplicitDiscount = oldPrice && Number(oldPrice) > Number(price);
+  const strikePrice = hasExplicitDiscount ? oldPrice : null;
   const discountPercent = strikePrice
     ? Math.round(((parseFloat(strikePrice) - price) / parseFloat(strikePrice)) * 100)
-    : 30;
+    : 0;
 
   const handleFavoriteClick = (e) => {
     e.preventDefault();
@@ -26,7 +27,7 @@ const ProductItem = ({ id, image, name, price, oldPrice }) => {
           src={image && image[0] ? image[0] : ""}
           alt={name || "Product"}
         />
-        <DiscountTag discountPercent={discountPercent} />
+        <DiscountTag tag={tag} discountPercent={discountPercent} />
       </div>
 
       <div className="pt-2 flex flex-col gap-0.5">
@@ -35,10 +36,16 @@ const ProductItem = ({ id, image, name, price, oldPrice }) => {
             <span className="text-red-600 font-bold text-sm sm:text-base">
               US {currency}{price}
             </span>
-            {discountPercent > 0 && (
+            {tag ? (
               <span className="text-black font-bold text-xs sm:text-sm">
-                -{discountPercent}%
+                {tag}
               </span>
+            ) : (
+              discountPercent > 0 && (
+                <span className="text-black font-bold text-xs sm:text-sm">
+                  -{discountPercent}%
+                </span>
+              )
             )}
             {strikePrice && (
               <span className="text-gray-400 text-xs sm:text-sm line-through">

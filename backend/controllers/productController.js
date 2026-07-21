@@ -7,6 +7,8 @@ const addProduct = async (req, res) => {
       name,
       description,
       price,
+      oldPrice,
+      tag,
       category,
       subCategory,
       sizes,
@@ -37,6 +39,8 @@ const addProduct = async (req, res) => {
       name,
       description,
       price: Number(price),
+      oldPrice: oldPrice ? Number(oldPrice) : 0,
+      tag: tag ? String(tag).trim() : "",
       category,
       subCategory,
       sizes:
@@ -59,6 +63,28 @@ const addProduct = async (req, res) => {
       success: false,
       message: error.message,
     });
+  }
+};
+
+// update product tag, price, oldPrice, bestseller
+const updateProduct = async (req, res) => {
+  try {
+    const { id, price, oldPrice, tag, bestseller, name, category, subCategory, description } = req.body;
+    const updateData = {};
+    if (price !== undefined) updateData.price = Number(price);
+    if (oldPrice !== undefined) updateData.oldPrice = Number(oldPrice);
+    if (tag !== undefined) updateData.tag = String(tag).trim();
+    if (bestseller !== undefined) updateData.bestseller = bestseller === true || bestseller === "true";
+    if (name) updateData.name = name;
+    if (category) updateData.category = category;
+    if (subCategory) updateData.subCategory = subCategory;
+    if (description) updateData.description = description;
+
+    const updatedProduct = await productModel.findByIdAndUpdate(id, updateData, { new: true });
+    res.json({ success: true, message: "Product updated successfully", product: updatedProduct });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -98,4 +124,4 @@ const singleProduct = async (req, res) => {
   }
 };
 
-export { addProduct, listProduct, removeProduct, singleProduct };
+export { addProduct, updateProduct, listProduct, removeProduct, singleProduct };

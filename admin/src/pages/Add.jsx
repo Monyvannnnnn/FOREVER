@@ -23,6 +23,9 @@ const Add = ({ token }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [oldPrice, setOldPrice] = useState("");
+  const [tag, setTag] = useState("");
+  const [tagOption, setTagOption] = useState("");
   const [category, setCategory] = useState("Men");
   const [subCategory, setSubCategory] = useState("Topwear");
   const [bestseller, setBestseller] = useState(false);
@@ -55,6 +58,8 @@ const Add = ({ token }) => {
       formData.append("name", name);
       formData.append("description", description);
       formData.append("price", price);
+      formData.append("oldPrice", oldPrice);
+      formData.append("tag", tagOption === "Custom" ? tag : tagOption);
       formData.append("category", category);
       formData.append("subCategory", subCategory);
       formData.append("bestseller", bestseller);
@@ -80,6 +85,9 @@ const Add = ({ token }) => {
         setName("");
         setDescription("");
         setPrice("");
+        setOldPrice("");
+        setTag("");
+        setTagOption("");
         setImage1(false);
         setImage2(false);
         setImage3(false);
@@ -237,7 +245,7 @@ const Add = ({ token }) => {
           />
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-2 w-full sm:gap-8">
+        <div className="flex flex-col sm:flex-row gap-2 w-full sm:gap-6 flex-wrap">
           <div>
             <p className="mb-2">Product Category</p>
             <select
@@ -263,15 +271,54 @@ const Add = ({ token }) => {
             </select>
           </div>
           <div>
-            <p className="mb-2">Product Price</p>
+            <p className="mb-2">Product Price ($)</p>
             <input
               type="number"
               placeholder="25"
-              className="w-full px-3 py-2 sm:w-30 border"
+              className="w-full px-3 py-2 sm:w-28 border"
               onChange={(e) => setPrice(e.target.value)}
               value={price}
               required
             />
+          </div>
+          <div>
+            <p className="mb-2">Old Price ($) <span className="text-xs text-gray-400 font-normal">(Optional)</span></p>
+            <input
+              type="number"
+              placeholder="35"
+              className="w-full px-3 py-2 sm:w-28 border"
+              onChange={(e) => setOldPrice(e.target.value)}
+              value={oldPrice}
+            />
+          </div>
+          <div>
+            <p className="mb-2">Discount / Tag <span className="text-xs text-gray-400 font-normal">(Optional)</span></p>
+            <div className="flex gap-2">
+              <select
+                onChange={(e) => setTagOption(e.target.value)}
+                className="px-3 py-2 border"
+                value={tagOption}
+              >
+                <option value="">None</option>
+                <option value="HOT">HOT</option>
+                <option value="NEW">NEW</option>
+                <option value="-10%">-10%</option>
+                <option value="-20%">-20%</option>
+                <option value="-30%">-30%</option>
+                <option value="-50%">-50%</option>
+                <option value="SALE">SALE</option>
+                <option value="Custom">Custom...</option>
+              </select>
+              {tagOption === "Custom" && (
+                <input
+                  type="text"
+                  placeholder="e.g. HOT -20%"
+                  className="px-3 py-2 border w-32"
+                  value={tag}
+                  onChange={(e) => setTag(e.target.value)}
+                />
+              )}
+            </div>
           </div>
         </div>
 

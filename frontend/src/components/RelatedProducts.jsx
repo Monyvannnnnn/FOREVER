@@ -24,6 +24,8 @@ export default function RelatedProducts({ category, subCategory, id }) {
             id={item._id}
             name={item.name}
             price={item.price}
+            oldPrice={item.oldPrice}
+            tag={item.tag}
             image={item.image}
           />
         ))}

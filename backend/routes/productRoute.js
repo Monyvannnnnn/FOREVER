@@ -2,6 +2,7 @@ import express from "express";
 import {
   listProduct,
   addProduct,
+  updateProduct,
   removeProduct,
   singleProduct,
 } from "../controllers/productController.js";
@@ -23,6 +24,7 @@ productRouter.post(
   ]),
   addProduct,
 );
+productRouter.post("/update", adminAuth, updateProduct);
 productRouter.post("/remove",adminAuth, removeProduct);
 productRouter.post("/single", singleProduct);
 productRouter.get("/list", listProduct);
