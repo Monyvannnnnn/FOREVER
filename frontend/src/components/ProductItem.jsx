@@ -4,18 +4,18 @@ import { ShopContext } from "../context/ShopContext.jsx";
 import DiscountTag from "./DiscountTag.jsx";
 
 const ProductItem = ({ id, image, name, price, oldPrice }) => {
-  const { currency } = useContext(ShopContext);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { currency, favorites, toggleFavorite } = useContext(ShopContext);
+  const isFavorite = favorites ? favorites.includes(id) : false;
 
   const strikePrice = oldPrice || (price ? (price * 1.4).toFixed(2) : null);
   const discountPercent = strikePrice
     ? Math.round(((parseFloat(strikePrice) - price) / parseFloat(strikePrice)) * 100)
     : 30;
 
-  const toggleFavorite = (e) => {
+  const handleFavoriteClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsFavorite(!isFavorite);
+    toggleFavorite(id);
   };
 
   return (
@@ -49,7 +49,7 @@ const ProductItem = ({ id, image, name, price, oldPrice }) => {
           <button
             type="button"
             aria-label="Favorite"
-            onClick={toggleFavorite}
+            onClick={handleFavoriteClick}
             className="p-1 text-gray-700 hover:text-red-500 transition-colors"
           >
             {isFavorite ? (

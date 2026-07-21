@@ -12,7 +12,7 @@ const navLinks = [
 
 export default function Navbar() {
   const [visible, setVisible] = useState(false);
-  const { setShowSearch, getCartCount, token, setToken, setCartItems, navigate } = useContext(ShopContext);
+  const { setShowSearch, getCartCount, getFavoritesCount, token, setToken, setCartItems, navigate } = useContext(ShopContext);
   const logout = () => {
     localStorage.removeItem("token");
     setToken("");
@@ -67,6 +67,29 @@ export default function Navbar() {
             </div>
           )}
         </div>
+
+        <Link to="/favorites" className="relative text-[#5A3A31] hover:opacity-80 transition-opacity">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.8}
+            stroke="currentColor"
+            className="w-5 h-5 cursor-pointer"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+            />
+          </svg>
+          {getFavoritesCount() > 0 && (
+            <p className="absolute -right-1.5 bottom-1.25 aspect-square w-4 rounded-full bg-[#5A3A31] text-center text-[8px] leading-4 text-white font-bold">
+              {getFavoritesCount()}
+            </p>
+          )}
+        </Link>
+
         <Link to="/cart" className="relative">
           <img
             src={assets.cart_icon}
@@ -118,6 +141,18 @@ export default function Navbar() {
               {item.label}
             </NavLink>
           ))}
+          <NavLink
+            to="/favorites"
+            className="border-b border-gray-200 py-2 pl-6 flex items-center justify-between pr-6"
+            onClick={() => setVisible(false)}
+          >
+            <span>WISH LIST</span>
+            {getFavoritesCount() > 0 && (
+              <span className="bg-[#5A3A31] text-white text-xs px-2 py-0.5 rounded-full">
+                {getFavoritesCount()}
+              </span>
+            )}
+          </NavLink>
         </div>
       </div>
     </div>
