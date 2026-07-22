@@ -12,14 +12,24 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify";
 import { useEffect } from "react";
 const cleanBackendUrl = (rawUrl) => {
-  let url = rawUrl || "http://localhost:4000";
+  let url = rawUrl ? String(rawUrl).trim() : "http://localhost:4000";
   if (url.includes("VITE_BACKEND_URL")) {
     url = url.replace(/VITE_BACKEND_URL\s*=?\s*/gi, "").trim();
   }
-  url = url.trim().replace(/\/+$/, "");
+  url = url.replace(/^['"]|['"]$/g, "").trim().replace(/\/+$/, "");
+
   if (!url.startsWith("http://") && !url.startsWith("https://")) {
-    url = "https://" + url;
+    if (url.includes("localhost") || url.includes("127.0.0.1")) {
+      url = "http://" + url;
+    } else {
+      url = "https://" + url;
+    }
   }
+
+  if (url.includes("localhost") || url.includes("127.0.0.1")) {
+    url = url.replace(/^https:\/\//i, "http://");
+  }
+
   return url;
 };
 

@@ -179,13 +179,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Backdrop Blur Overlay */}
-      <div
-        onClick={() => setVisible(false)}
-        className={`sm:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-md transition-opacity duration-500 ease-in-out ${
-          visible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
-      />
 
       {/* Mobile Sidebar Menu Overlay */}
       <div

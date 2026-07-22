@@ -28,8 +28,7 @@ const Banner = ({ token }) => {
   // Fetch existing banner on component mount
   const fetchBanner = async () => {
     try {
-      const url = backendUrl || "http://localhost:4000";
-      const response = await axios.get(url + "/api/banner");
+      const response = await axios.get(backendUrl + "/api/banner");
       if (response.data.success && response.data.banner) {
         setCurrentBanner(response.data.banner.image);
       }
@@ -111,9 +110,8 @@ const Banner = ({ token }) => {
       const formData = new FormData();
       formData.append("image", finalFile);
 
-      const url = backendUrl || "http://localhost:4000";
       const response = await axios.post(
-        url + "/api/banner/update",
+        backendUrl + "/api/banner/update",
         formData,
         { headers: { token } }
       );

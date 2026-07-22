@@ -22,7 +22,11 @@ const Login = ({ setToken }) => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
+      if (error.response?.status === 429) {
+        toast.error("Too many login attempts. Please try again later.");
+      } else {
+        toast.error(error.message);
+      }
     }
   };
 

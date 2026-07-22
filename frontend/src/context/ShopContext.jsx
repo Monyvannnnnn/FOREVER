@@ -10,14 +10,24 @@ const ShopContextProvider = (props) => {
   const currency = "$";
   const delivery_fee = 10;
   const cleanBackendUrl = (rawUrl) => {
-    let url = rawUrl || "http://localhost:4000";
+    let url = rawUrl ? String(rawUrl).trim() : "http://localhost:4000";
     if (url.includes("VITE_BACKEND_URL")) {
       url = url.replace(/VITE_BACKEND_URL\s*=?\s*/gi, "").trim();
     }
-    url = url.trim().replace(/\/+$/, "");
+    url = url.replace(/^['"]|['"]$/g, "").trim().replace(/\/+$/, "");
+
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
-      url = "https://" + url;
+      if (url.includes("localhost") || url.includes("127.0.0.1")) {
+        url = "http://" + url;
+      } else {
+        url = "https://" + url;
+      }
     }
+
+    if (url.includes("localhost") || url.includes("127.0.0.1")) {
+      url = url.replace(/^https:\/\//i, "http://");
+    }
+
     return url;
   };
 
@@ -147,8 +157,7 @@ const ShopContextProvider = (props) => {
 
   const getBannerData = async () => {
     try {
-      const url = backendUrl || "http://localhost:4000";
-      const response = await axios.get(url + "/api/banner");
+      const response = await axios.get(backendUrl + "/api/banner");
       if (response.data.success && response.data.banner) {
         setBanner(response.data.banner);
       }

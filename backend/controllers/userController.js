@@ -3,12 +3,13 @@ import validator from "validator";
 import userModel from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import rateLimit from "express-rate-limit";
 dotenv.config();
 //route for user login
 
 const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET);
-  jwt.verify(token, process.env.JWT_SECRET);
+  const jwtSecret = (process.env.JWT_SECRET || 'greatstack').replace(/^['"]|['"]$/g, '').trim();
+  return jwt.sign({ id }, jwtSecret);
 };
 
 const loginUser = async (req, res) => {
@@ -30,6 +31,11 @@ const loginUser = async (req, res) => {
     res.json({ success: false, message: "Internal server error" });
   }
 };
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: { success: false, message: "Too many login attempts, please try again later" },
+});
 
 //route for user registration
 
@@ -100,4 +106,4 @@ const adminLogin = async (req, res) => {
     }
 };
 
-export { loginUser, registerUser, adminLogin };
+export { loginUser, registerUser, adminLogin, loginLimiter };
